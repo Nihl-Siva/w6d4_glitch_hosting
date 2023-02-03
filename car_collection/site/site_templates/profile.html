@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories = True) %}
+    {% if messages %}
+        {% for cat, msg in messages %}
+            {% if cat == 'auth-success' %}
+            <div class="container">
+                {{ msg }}
+                <button type="button" class="close" data-dismiss = "alert", onclick="this.parentElement.style.display='none'">&times;</button>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<header class="hero-section">
+    <h3 class="header-text">If you aint first, yer last {{current_user.email}}!</h3>
+    <h1>Login Here</h1>
+    <main class="container car_form">
+    <div class="row">
+        <aside class="col-12 col-md-6">
+            <h2>Create a Car!</h2>
+            {% include 'car_form.html' %}
+        </aside>
+    </div>
+</main>
+
+</header>
+
+<div class="container">
+    <h3>Profile Details:</h3>
+    <li class="list-group-item">Email: {{ current_user.email }}</li>
+    <li class="list-group-item">Token: {{ current_user.token }}</li>
+    <div class="row">
+        {% for car in cars %}
+        <div class="col-3">
+            <div class="card" style="width: 18rem;">
+            <img src="../../static/images/car-pic.png" alt="Card Image Cap" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Your {{ car.model }}</h5>
+                <p class="card-text">
+                    Make: {{ car.make }}<br>
+                    Model: {{ car.model }}<br>
+                    Year: {{ car.year }}<br>
+                    Color: {{ car.color }}
+                </p>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+
+
+    </div>
+</div>
+
+{% endblock content %}
